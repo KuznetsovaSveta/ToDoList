@@ -102,6 +102,7 @@
                     <div class="task__left">
                         <input id="nameDone" class="task__checkbox" type="checkbox" @change="doCheck(index, 'complete')" checked>
                         <label for="nameDone" class="task__name">{{mask.title}}</label>
+                        <p class="task__description">{{mask.description}}</p>
                     </div>
                     <div class="task__right" @click="toggleMenu">
                                 <button class="task__dop button task__button button__remove" @click="removeTask(index, 'complete')">
