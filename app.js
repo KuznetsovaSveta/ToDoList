@@ -45,6 +45,7 @@ const vm = new Vue({
             this.descriptionInput = '';
             this.nameInput = '';
             this.currentPopup = false;
+            localStorage.toDoList = JSON.stringify(this.toDoList);
         },
         doCheck(index, type){
             //если у пункта тип "need"
@@ -61,10 +62,14 @@ const vm = new Vue({
                 this.toDoList.push(...notCompleteMask);
                 // console.log(index);
             }
+            localStorage.toDoList = JSON.stringify(this.toDoList);
+            localStorage.completeList = JSON.stringify(this.completeList);
         },
         removeTask(index, type){
             const list = type === 'need' ? this.toDoList : this.completeList;
             list.splice(index,1);
+            localStorage.toDoList = JSON.stringify(this.toDoList);
+            localStorage.completeList = JSON.stringify(this.completeList);
         },
         startEditTask(index){
             this.showPopup('edit');
@@ -89,6 +94,7 @@ const vm = new Vue({
 
             //    закрываем модальное окно
             this.currentPopup = false;
+            localStorage.toDoList = JSON.stringify(this.toDoList);
         },
         showPopup(action){
             this.currentPopup = true;
@@ -148,5 +154,9 @@ const vm = new Vue({
     },
     beforeDestroy() {
         if (this.intervalId) clearInterval(this.intervalId)
+    },
+    mounted() {
+        if(localStorage.toDoList) this.toDoList = JSON.parse(localStorage.toDoList);
+        if(localStorage.completeList) this.completeList = JSON.parse(localStorage.completeList);
     },
 })
