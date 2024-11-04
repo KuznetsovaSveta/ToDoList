@@ -107,6 +107,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    margin: 0 0 0 auto;
 }
 
 .search__input-svg{
@@ -125,6 +126,7 @@
     background-color: var(--orange);
     cursor: pointer;
     transition: 0.2s ease background-color;
+    flex-shrink: 0;
 }
 
 .header__plus:hover{
