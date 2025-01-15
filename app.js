@@ -44,7 +44,8 @@ const vm = new Vue({
             });
             this.descriptionInput = '';
             this.nameInput = '';
-            this.currentPopup = false;
+            // this.currentPopup = false;
+            this.closePopup();
             localStorage.toDoList = JSON.stringify(this.toDoList);
         },
         doCheck(index, type){
@@ -93,11 +94,14 @@ const vm = new Vue({
             this.editingIndex = '';
 
             //    закрываем модальное окно
-            this.currentPopup = false;
+            this.closePopup();
+
             localStorage.toDoList = JSON.stringify(this.toDoList);
         },
         showPopup(action){
             this.currentPopup = true;
+            //добавляем класс к боди
+            document.body.style.overflow = 'hidden';
             if(action === 'edit'){
                 this.modalTitle = 'Edit Task';
                 this.isEditing = true;
@@ -108,6 +112,8 @@ const vm = new Vue({
         },
         closePopup(){
             this.currentPopup = false;
+        //    удаляем класс у боди
+            document.body.style.overflow = 'hidden auto';
         },
         toggleMenu(event) {
             event.target.closest('.task__right').lastChild.classList.toggle('task__menu-active');
