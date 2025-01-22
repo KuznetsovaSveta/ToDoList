@@ -1,1 +1,1 @@
-Посмотреть можно [здесь]([ссылка](https://kuznetsovasveta.github.io/ToDoList/))
+Посмотреть можно [здесь](https://kuznetsovasveta.github.io/ToDoList/)
