@@ -7,7 +7,6 @@ const vm = new Vue({
         completeList: [],
         // categoriesList: ['All'],
         currentPopup: false,
-        // currentMenu: false,
         modalTitle: 'Add Task',
         isEditing: false,
         editingIndex: '',
@@ -55,13 +54,11 @@ const vm = new Vue({
                 const completeMask = this.toDoList.splice(index, 1);
                 //и вставляем его в массив выполненных задач
                 this.completeList.push(...completeMask);
-                // console.log(index);
             } else{
                 //если нажимаем на чекбокс выполненного пункта, то из массива выполненных задач удаляем один пункт
                 const notCompleteMask = this.completeList.splice(index, 1);
                 //и вставляем его в массив не выполненных задач
                 this.toDoList.push(...notCompleteMask);
-                // console.log(index);
             }
             localStorage.toDoList = JSON.stringify(this.toDoList);
             localStorage.completeList = JSON.stringify(this.completeList);
@@ -165,4 +162,4 @@ const vm = new Vue({
         if(localStorage.toDoList) this.toDoList = JSON.parse(localStorage.toDoList);
         if(localStorage.completeList) this.completeList = JSON.parse(localStorage.completeList);
     },
-})
+});
