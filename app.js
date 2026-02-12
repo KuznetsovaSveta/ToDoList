@@ -73,10 +73,10 @@ const vm = new Vue({
     },
     startEditTask(index) {
       this.showPopup("edit");
-      // //пишем текущее имя в поле ввода
-      // this.nameInput = this.toDoList[index].title;
-      // this.descriptionInput = this.toDoList[index].description;
-      // this.editingIndex = index;
+      //пишем текущее имя в поле ввода
+      this.nameInput = this.toDoList[index].title;
+      this.descriptionInput = this.toDoList[index].description;
+      this.editingIndex = index;
     },
     setNewData() {
       //проверяем на пустоту
@@ -106,13 +106,11 @@ const vm = new Vue({
       if (action === "edit") {
         this.modalTitle = "Edit Task";
         this.isEditing = true;
-        //пишем текущее имя в поле ввода
-        this.nameInput = this.toDoList[index].title;
-        this.descriptionInput = this.toDoList[index].description;
-        this.editingIndex = index;
       } else {
         this.modalTitle = "Add Task";
         this.isEditing = false;
+        this.nameInput = "";
+        this.descriptionInput = "";
       }
     },
     closePopup() {
