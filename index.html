@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@700;800&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="style.css">
     <title>ToDo list</title>
@@ -17,140 +19,164 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 </head>
+
 <body class="body">
-<div id="app" class="">
-    <header class="header">
-        <div class="container header__container">
-            <h1 class="header__title">
-                <div class="header__date">
-                    <span class="header__day">
-                    {{currentDay}}
-                </span>
-                    <span class="header__num">
-                    {{currentNum}}
-                </span>
-                </div>
-                <span class="header__month">
-                    {{currentMonth}}
-                </span>
-            </h1>
-            <div class="header__right">
-                <div class="header__search search form">
-                    <transition name="searchFade">
-                        <input type="search" class="search__input form__input" v-if="showInput" v-model="searchInput">
-                    </transition>
-                    <div class="search__input-btn" @click="showInput = !showInput">
-                        <svg version="1.1" class="search__input-svg" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"><path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23 s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92 c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17 s-17-7.626-17-17S14.61,6,23.984,6z"/></svg>
+    <div id="app" class="">
+        <header class="header">
+            <div class="container header__container">
+                <h1 class="header__title">
+                    <div class="header__date">
+                        <span class="header__day">
+                            {{currentDay}}
+                        </span>
+                        <span class="header__num">
+                            {{currentNum}}
+                        </span>
                     </div>
-                </div>
-                <div class="header__plus" @click="showPopup">
-                    <svg class="header__plus-icon" version="1.1" viewBox="0 0 512 512" xml:space="preserve"
-                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path class="st0" d="M381,236H276V131c0-11-9-20-20-20s-20,9-20,20v105H131c-11,0-20,9-20,20s9,20,20,20h105v105c0,11,9,20,20,20  s20-9,20-20V276h105c11,0,20-9,20-20S392,236,381,236z"/></svg>
-                </div>
-            </div>
-
-        </div>
-    </header>
-
-    <main class="main">
-        <div class="container main__container">
-<!--            <div class="main__tabs">-->
-<!--                <div class="main__tab button" v-for="(category, index) in categoriesList" :key="category.id">-->
-<!--                    {{ category }}-->
-<!--                </div>-->
-<!--                <button class="main__tab main__tab-plus button" @click="showPopup">+</button>-->
-<!--                <button class="main__tab main__tab-all button" >All</button>-->
-<!--            </div>-->
-            <h2 class="main__header">
-                <span class="main__subtitle">To Do</span>
-                <span class="main__num">{{toDoList.length}}</span>
-            </h2>
-            <ul class="main__list">
-                <li class="task main__item" v-for="(mask,index) in filteredTasks" :key="mask.id">
-                    <div class="task__left">
-                        <input id="name" class="task__checkbox" type="checkbox" @change="doCheck(index, 'need')">
-                        <label for="name" class="task__name">{{mask.title}}</label>
-                        <p class="task__description">{{mask.description}}</p>
-                    </div>
-                    <div class="task__right" @click="toggleMenu">
-                        <svg class="task__right-icon" width="500px" height="500px" viewBox="0 0 500 500" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <title>menu</title>
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <path d="M250,355 C277.614237,355 300,377.385763 300,405 C300,432.614237 277.614237,455 250,455 C222.385763,455 200,432.614237 200,405 C200,377.385763 222.385763,355 250,355 Z M250,200 C277.614237,200 300,222.385763 300,250 C300,277.614237 277.614237,300 250,300 C222.385763,300 200,277.614237 200,250 C200,222.385763 222.385763,200 250,200 Z M250,45 C277.614237,45 300,67.3857625 300,95 C300,122.614237 277.614237,145 250,145 C222.385763,145 200,122.614237 200,95 C200,67.3857625 222.385763,45 250,45 Z"></path>
-                            </g>
-                        </svg>
-                        <div class="task__menu">
-                            <div class="task__dops">
-                                <button class="task__dop button task__button button__edit" @click="startEditTask(index)">
-                                    Edit
-                                </button>
-                                <button class="task__dop button task__button button__remove" @click="removeTask(index, 'need')">
-                                    Remove
-                                </button>
-                            </div>
+                    <span class="header__month">
+                        {{currentMonth}}
+                    </span>
+                </h1>
+                <div class="header__right">
+                    <div class="header__search search form">
+                        <transition name="searchFade">
+                            <input type="search" class="search__input form__input" v-if="showInput"
+                                v-model="searchInput">
+                        </transition>
+                        <div class="search__input-btn" @click="showInput = !showInput">
+                            <svg version="1.1" class="search__input-svg" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 56.966 56.966"
+                                style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve">
+                                <path
+                                    d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23 s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92 c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17 s-17-7.626-17-17S14.61,6,23.984,6z" />
+                            </svg>
                         </div>
                     </div>
-                </li>
-            </ul>
-
-            <h2 class="main__header">
-                <span class="main__subtitle">Done</span>
-                <span class="main__num">{{completeList.length}}</span>
-            </h2>
-            <ul class="main__list main__list-complete">
-                <li class="task task-complete main__item" v-for="(mask,index) in filteredCompletedTasks" :key="mask.id">
-                    <div class="task__left">
-                        <input id="nameDone" class="task__checkbox" type="checkbox" @change="doCheck(index, 'complete')" checked>
-                        <label for="nameDone" class="task__name">{{mask.title}}</label>
-                        <p class="task__description">{{mask.description}}</p>
+                    <div class="header__plus" @click="showPopup">
+                        <svg class="header__plus-icon" version="1.1" viewBox="0 0 512 512" xml:space="preserve"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path class="st0"
+                                d="M381,236H276V131c0-11-9-20-20-20s-20,9-20,20v105H131c-11,0-20,9-20,20s9,20,20,20h105v105c0,11,9,20,20,20  s20-9,20-20V276h105c11,0,20-9,20-20S392,236,381,236z" />
+                        </svg>
                     </div>
-                    <div class="task__right" @click="toggleMenu">
-                                <button class="task__dop button task__button button__remove" @click="removeTask(index, 'complete')">
-                                    Remove
-                                </button>
-<!--                            </div>-->
-<!--                        </div>-->
-                    </div>
-
-<!--                    <button class="btn-remove" @click="removeTask(index, 'complete')">-->
-<!--                        Remove-->
-<!--                    </button>-->
-                </li>
-            </ul>
-        </div>
-
-        <div class="modal" :class=" {'modal-open' : currentPopup}">
-            <div class="modal__bg" @click="closePopup"></div>
-            <div class="modal__content" v-if="">
-                <div class="modal__title">
-                    {{ modalTitle }}
                 </div>
-                <div class="modal__close" @click="closePopup">
-                    <svg class="modal__close-icon" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path class="st0" d="M381,236H276V131c0-11-9-20-20-20s-20,9-20,20v105H131c-11,0-20,9-20,20s9,20,20,20h105v105c0,11,9,20,20,20  s20-9,20-20V276h105c11,0,20-9,20-20S392,236,381,236z"/></svg>
-                </div>
-                <div class="modal__form form">
-                    <div class="form__item">
-                        <label for="task" class="form__label">Task title</label>
-                        <input id="task" type="text" class="form__input" placeholder="Add task name" v-bind:value="nameInput" @input="setTitle" @keyup.enter="addNewTask">
+
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container main__container">
+                <!--            <div class="main__tabs">-->
+                <!--                <div class="main__tab button" v-for="(category, index) in categoriesList" :key="category.id">-->
+                <!--                    {{ category }}-->
+                <!--                </div>-->
+                <!--                <button class="main__tab main__tab-plus button" @click="showPopup">+</button>-->
+                <!--                <button class="main__tab main__tab-all button" >All</button>-->
+                <!--            </div>-->
+                <h2 class="main__header">
+                    <span class="main__subtitle">To Do</span>
+                    <span class="main__num">{{toDoList.length}}</span>
+                </h2>
+                <ul class="main__list">
+                    <li class="task main__item" v-for="(mask,index) in filteredTasks" :key="mask.id">
+                        <div class="task__left">
+                            <input id="name" class="task__checkbox" type="checkbox" @change="doCheck(index, 'need')">
+                            <label for="name" class="task__name">{{mask.title}}</label>
+                            <p class="task__description">{{mask.description}}</p>
+                        </div>
+                        <div class="task__right" @click="toggleMenu">
+                            <svg class="task__right-icon" width="500px" height="500px" viewBox="0 0 500 500"
+                                version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>menu</title>
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <path
+                                        d="M250,355 C277.614237,355 300,377.385763 300,405 C300,432.614237 277.614237,455 250,455 C222.385763,455 200,432.614237 200,405 C200,377.385763 222.385763,355 250,355 Z M250,200 C277.614237,200 300,222.385763 300,250 C300,277.614237 277.614237,300 250,300 C222.385763,300 200,277.614237 200,250 C200,222.385763 222.385763,200 250,200 Z M250,45 C277.614237,45 300,67.3857625 300,95 C300,122.614237 277.614237,145 250,145 C222.385763,145 200,122.614237 200,95 C200,67.3857625 222.385763,45 250,45 Z">
+                                    </path>
+                                </g>
+                            </svg>
+                            <div class="task__menu">
+                                <div class="task__dops">
+                                    <button class="task__dop button task__button button__edit"
+                                        @click="startEditTask(index)">
+                                        Edit
+                                    </button>
+                                    <button class="task__dop button task__button button__remove"
+                                        @click="removeTask(index, 'need')">
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <h2 class="main__header">
+                    <span class="main__subtitle">Done</span>
+                    <span class="main__num">{{completeList.length}}</span>
+                </h2>
+                <ul class="main__list main__list-complete">
+                    <li class="task task-complete main__item" v-for="(mask,index) in filteredCompletedTasks"
+                        :key="mask.id">
+                        <div class="task__left">
+                            <input id="nameDone" class="task__checkbox" type="checkbox"
+                                @change="doCheck(index, 'complete')" checked>
+                            <label for="nameDone" class="task__name">{{mask.title}}</label>
+                            <p class="task__description">{{mask.description}}</p>
+                        </div>
+                        <div class="task__right" @click="toggleMenu">
+                            <button class="task__dop button task__button button__remove"
+                                @click="removeTask(index, 'complete')">
+                                Remove
+                            </button>
+                            <!--                            </div>-->
+                            <!--                        </div>-->
+                        </div>
+
+                        <!--                    <button class="btn-remove" @click="removeTask(index, 'complete')">-->
+                        <!--                        Remove-->
+                        <!--                    </button>-->
+                    </li>
+                </ul>
+            </div>
+
+            <div class="modal" :class=" {'modal-open' : currentPopup}">
+                <div class="modal__bg" @click="closePopup"></div>
+                <div class="modal__content" v-if="">
+                    <div class="modal__title">
+                        {{ modalTitle }}
                     </div>
-                    <div class="form__item">
-                        <label for="description" class="form__label">Description</label>
-                        <textarea id="description" class="form__textarea" placeholder="Add description"
-                                  v-bind:value="descriptionInput" @input="setDescription"></textarea>
+                    <div class="modal__close" @click="closePopup">
+                        <svg class="modal__close-icon" viewBox="0 0 512 512" xml:space="preserve"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path class="st0"
+                                d="M381,236H276V131c0-11-9-20-20-20s-20,9-20,20v105H131c-11,0-20,9-20,20s9,20,20,20h105v105c0,11,9,20,20,20  s20-9,20-20V276h105c11,0,20-9,20-20S392,236,381,236z" />
+                        </svg>
                     </div>
-                    <button v-if="isEditing" type="button" class="form__button" @click="setNewData">
-                        Edit
-                    </button>
-                    <button v-if="!isEditing" type="button" class="form__button" @click="addNewTask">
-                        Add new task
-                    </button>
+                    <div class="modal__form form">
+                        <div class="form__item">
+                            <label for="task" class="form__label">Task title</label>
+                            <input id="task" type="text" class="form__input" placeholder="Add task name"
+                                v-bind:value="nameInput" @input="setTitle" @keyup.enter="addNewTask">
+                        </div>
+                        <div class="form__item">
+                            <label for="description" class="form__label">Description</label>
+                            <textarea id="description" class="form__textarea" placeholder="Add description"
+                                v-bind:value="descriptionInput" @input="setDescription"></textarea>
+                        </div>
+                        <button v-if="isEditing" type="button" class="form__button" @click="setNewData">
+                            Edit
+                        </button>
+                        <button v-if="!isEditing" type="button" class="form__button" @click="addNewTask">
+                            Add new task
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="app.js"></script>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
