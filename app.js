@@ -123,7 +123,7 @@ const vm = new Vue({
       const isActive = currentMenu.classList.contains("task__menu-active");
       // 1. Сначала закрываем ВСЕ меню
       document
-        .querySelectorAll("task__menu-active")
+        .querySelectorAll(".task__menu-active")
         .forEach((menu) => menu.classList.remove("task__menu-active"));
 
       // 2. Если текущее меню НЕ было активно — открываем его
